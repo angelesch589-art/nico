@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Para Ti, Mi Amor ❤️</title>
+  <!-- Tipografías elegantes y románticas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Great+Vibes&family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Botón flotante para control de música y efectos -->
+  <button id="audio-toggle" class="audio-btn" aria-label="Activar o desactivar música" title="Música y Sonidos">
+    <span id="audio-icon">🔇</span>
+    <span id="audio-label">Activar Música</span>
+  </button>
+
+  <!-- PANTALLA 1: EFECTO HACKER (Lluvia Matrix de corazones y códigos rosa/rojo) -->
+  <section id="screen-hacker" class="screen active">
+    <canvas id="hacker-canvas"></canvas>
+    <div class="hacker-overlay">
+      <p class="terminal-text" id="terminal-status">&gt; INICIANDO SISTEMA CORAZÓN_OS v2.0...</p>
+    </div>
+  </section>
+
+  <!-- PANTALLA 2: UNIVERSO Y EXPLOSIÓN DE PARTÍCULAS -->
+  <section id="screen-universe" class="screen">
+    <canvas id="universe-canvas"></canvas>
+    <div class="universe-title" id="universe-title">
+      <span>Te Amo</span> <span class="heart-glow">❤️</span>
+    </div>
+  </section>
+
+  <!-- PANTALLA 3: REGALO KAWAII (Fondo claro con textura de papel y gatito tierno) -->
+  <section id="screen-gift" class="screen paper-bg">
+    <div class="kawaii-container">
+      <!-- Gatito Kawaii SVG inspirado en tu imagen de referencia -->
+      <div class="cat-wrapper bounce-anim">
+        <svg viewBox="0 0 260 220" class="kawaii-cat" xmlns="http://www.w3.org/2000/svg">
+          <!-- Resplandor rosa detrás del gatito -->
+          <path d="M130 195 C60 155, 25 110, 55 70 C75 45, 110 55, 130 80 C150 55, 185 45, 205 70 C235 110, 200 155, 130 195 Z" fill="#ffd6e7" opacity="0.75"/>
+          <!-- Florecitas flotantes alrededor -->
+          <g transform="translate(55, 58)">
+            <circle cx="0" cy="0" r="11" fill="#e8d5ff" stroke="#7c5295" stroke-width="2"/>
+            <circle cx="0" cy="0" r="4" fill="#fff"/>
+          </g>
+          <g transform="translate(128, 36)">
+            <circle cx="0" cy="0" r="12" fill="#ffccbc" stroke="#d84315" stroke-width="2"/>
+            <circle cx="0" cy="0" r="4" fill="#fff"/>
+          </g>
+          <g transform="translate(202, 62)">
+            <circle cx="0" cy="0" r="11" fill="#cceeff" stroke="#0277bd" stroke-width="2"/>
+            <circle cx="0" cy="0" r="4" fill="#fff"/>
+          </g>
+          <!-- Cuerpo y orejas del gatito blanco -->
+          <path d="M78 205 L82 145 Q75 115 84 95 L78 65 Q85 55 106 70 Q130 64 154 70 Q175 55 182 65 L176 95 Q185 115 178 145 L182 205" fill="#ffffff" stroke="#1a1a1a" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Pelitos laterales -->
+          <path d="M74 112 L66 115 M74 125 L65 128 M186 112 L194 115 M186 125 L195 128" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round"/>
+          <!-- Mejillas sonrojadas -->
+          <ellipse cx="95" cy="126" rx="14" ry="8" fill="#ff9ebb" opacity="0.8"/>
+          <ellipse cx="165" cy="126" rx="14" ry="8" fill="#ff9ebb" opacity="0.8"/>
+          <!-- Ojos grandes kawaii -->
+          <circle cx="103" cy="112" r="10.5" fill="#1a1a1a"/>
+          <circle cx="100" cy="108" r="3" fill="#ffffff"/>
+          <circle cx="157" cy="112" r="10.5" fill="#1a1a1a"/>
+          <circle cx="154" cy="108" r="3" fill="#ffffff"/>
+          <!-- Boquita :3 -->
+          <path d="M121 113 Q125.5 119 130 113 Q134.5 119 139 113" fill="none" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <h1 class="kawaii-title">¡HOLA MI AMOR!</h1>
+      <p class="kawaii-subtitle">¿Quieres ver tu regalo?</p>
+
+      <div class="kawaii-buttons">
+        <button id="btn-no" class="circle-btn btn-red" aria-label="No">✕</button>
+        <button id="btn-yes" class="circle-btn btn-red" aria-label="Sí">✓</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANTALLA 4: GATITO LLORANDO (Si presiona la X) -->
+  <section id="screen-sad" class="screen paper-bg">
+    <div class="kawaii-container">
+      <div class="cat-wrapper shake-anim">
+        <svg viewBox="0 0 260 220" class="kawaii-cat" xmlns="http://www.w3.org/2000/svg">
+          <!-- Cuerpo y orejitas caídas -->
+          <path d="M78 205 L82 145 Q75 115 84 95 Q76 72 95 72 Q130 66 165 72 Q184 72 176 95 Q185 115 178 145 L182 205" fill="#ffffff" stroke="#1a1a1a" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Interior orejas rosadas -->
+          <path d="M88 84 Q96 76 108 82" fill="none" stroke="#ff9ebb" stroke-width="6" stroke-linecap="round"/>
+          <path d="M172 84 Q164 76 152 82" fill="none" stroke="#ff9ebb" stroke-width="6" stroke-linecap="round"/>
+          <!-- Cejas tristes -->
+          <path d="M108 98 L120 94" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M152 98 L140 94" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round"/>
+          <!-- Patitas tapándose la carita -->
+          <path d="M98 165 Q98 118 114 118 Q130 118 130 158" fill="#ffffff" stroke="#1a1a1a" stroke-width="4.5" stroke-linecap="round"/>
+          <path d="M130 158 Q130 118 146 118 Q162 118 162 165" fill="#ffffff" stroke="#1a1a1a" stroke-width="4.5" stroke-linecap="round"/>
+          <!-- Lágrimas azules grandes -->
+          <circle cx="80" cy="126" r="10" fill="#4fc3f7" stroke="#0288d1" stroke-width="2.5"/>
+          <circle cx="77" cy="123" r="3" fill="#ffffff"/>
+          <circle cx="66" cy="148" r="8" fill="#4fc3f7" stroke="#0288d1" stroke-width="2.5"/>
+          <circle cx="180" cy="126" r="10" fill="#4fc3f7" stroke="#0288d1" stroke-width="2.5"/>
+          <circle cx="177" cy="123" r="3" fill="#ffffff"/>
+          <circle cx="194" cy="148" r="8" fill="#4fc3f7" stroke="#0288d1" stroke-width="2.5"/>
+        </svg>
+      </div>
+
+      <h2 class="kawaii-title">AW POR FAVOR?</h2>
+      <p class="kawaii-subtitle">Preparé este regalo para ti con todo el amor del mundo</p>
+
+      <div class="kawaii-buttons">
+        <button id="btn-back" class="circle-btn btn-red" aria-label="Regresar">⬅</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANTALLA 5: CARTA ROMÁNTICA -->
+  <section id="screen-letter" class="screen">
+    <canvas id="letter-canvas"></canvas>
+
+    <article class="letter-card">
+      <div class="card-glow"></div>
+      <h1 class="letter-title">para ti mi amor</h1>
+      
+      <div class="letter-body" id="typewriter-target"></div>
+      <span class="typing-cursor" id="typing-cursor">|</span>
+
+      <div class="letter-footer">
+        <button id="btn-restart" class="restart-btn">INICIO</button>
+      </div>
+    </article>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>

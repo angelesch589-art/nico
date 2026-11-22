@@ -1,0 +1,366 @@
+/* =========================================
+   VARIABLES Y CONFIGURACIÓN BASE
+   ========================================= */
+:root {
+  --bg-dark: #070208;
+  --neon-red: #ff1e56;
+  --neon-pink: #ff6ec7;
+  --neon-purple: #9d4edd;
+  --paper-light: #f4f1ea;
+  --kawaii-red: #d93829;
+  --kawaii-red-dark: #a82317;
+  --text-light: #fff0f5;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-dark);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  color: var(--text-light);
+  user-select: none;
+}
+
+/* =========================================
+   CONTROL DE PANTALLAS Y TRANSICIONES
+   ========================================= */
+.screen {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 1.1s cubic-bezier(0.4, 0, 0.2, 1), visibility 1.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.screen.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* =========================================
+   BOTÓN DE MÚSICA Y AUDIO FLOTANTE
+   ========================================= */
+.audio-btn {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 1000;
+  background: rgba(18, 5, 16, 0.78);
+  border: 1.5px solid var(--neon-pink);
+  color: #fff;
+  padding: 9px 16px;
+  border-radius: 999px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 15px rgba(255, 30, 86, 0.45);
+  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.audio-btn:hover {
+  transform: scale(1.05);
+  background: rgba(255, 30, 86, 0.25);
+  box-shadow: 0 0 22px rgba(255, 110, 199, 0.75);
+}
+
+/* =========================================
+   PANTALLA 1: ESTÉTICA HACKER
+   ========================================= */
+#screen-hacker {
+  background: #000000;
+}
+
+.hacker-overlay {
+  position: relative;
+  z-index: 5;
+  pointer-events: none;
+  text-align: center;
+  padding: 1rem;
+}
+
+.terminal-text {
+  font-family: 'Share Tech Mono', monospace;
+  color: #ff4d8d;
+  font-size: clamp(0.95rem, 2.5vw, 1.3rem);
+  letter-spacing: 2px;
+  background: rgba(0, 0, 0, 0.72);
+  padding: 10px 20px;
+  border: 1px solid rgba(255, 30, 86, 0.5);
+  border-radius: 6px;
+  text-shadow: 0 0 10px #ff1e56;
+  box-shadow: 0 0 25px rgba(255, 30, 86, 0.25);
+}
+
+/* =========================================
+   PANTALLA 2: UNIVERSO
+   ========================================= */
+#screen-universe {
+  background: radial-gradient(circle at center, #14051e 0%, #05010a 75%, #000000 100%);
+}
+
+.universe-title {
+  position: absolute;
+  top: 13%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  color: #ffffff;
+  text-shadow: 0 0 18px rgba(255, 110, 199, 0.9), 0 0 35px rgba(157, 78, 221, 0.8);
+  opacity: 0;
+  transition: opacity 1.5s ease;
+  white-space: nowrap;
+}
+
+.universe-title.visible {
+  opacity: 1;
+}
+
+.heart-glow {
+  display: inline-block;
+  animation: pulseHeart 1.4s infinite ease-in-out;
+}
+
+@keyframes pulseHeart {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.22); }
+}
+
+/* =========================================
+   PANTALLAS 3 Y 4: REGALO KAWAII (TEXTURA PAPEL)
+   ========================================= */
+.paper-bg {
+  background-color: #efede6;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.8) 0%, transparent 45%),
+    radial-gradient(circle at 80% 75%, rgba(215,210,200,0.6) 0%, transparent 50%),
+    repeating-linear-gradient(135deg, rgba(0,0,0,0.018) 0px, rgba(0,0,0,0.018) 2px, transparent 2px, transparent 10px),
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.25) 0px, rgba(255,255,255,0.25) 3px, transparent 3px, transparent 12px);
+  color: #2b1b1b;
+}
+
+.kawaii-container {
+  position: relative;
+  z-index: 5;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  max-width: 540px;
+  width: 92%;
+}
+
+.cat-wrapper {
+  width: clamp(175px, 42vw, 235px);
+  margin: 0 auto 0.5rem;
+}
+
+.kawaii-cat {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.08));
+}
+
+.bounce-anim {
+  animation: gentleFloat 2.6s ease-in-out infinite;
+}
+
+.shake-anim {
+  animation: sadWobble 1.8s ease-in-out infinite;
+}
+
+@keyframes gentleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+
+@keyframes sadWobble {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-2.5deg); }
+  75% { transform: rotate(2.5deg); }
+}
+
+.kawaii-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 800;
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  color: var(--kawaii-red);
+  letter-spacing: 1px;
+  margin-bottom: 0.35rem;
+  text-shadow: 1px 2px 0px rgba(0, 0, 0, 0.08);
+}
+
+.kawaii-subtitle {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.2rem, 3.5vw, 1.55rem);
+  font-weight: 700;
+  color: #362828;
+  margin-bottom: 1.8rem;
+}
+
+.kawaii-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 2.2rem;
+}
+
+.circle-btn {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  border: 3px solid var(--kawaii-red-dark);
+  background: repeating-linear-gradient(
+    -45deg,
+    #e04334,
+    #e04334 6px,
+    #d13526 6px,
+    #d13526 12px
+  );
+  color: #ffffff;
+  font-size: 2.3rem;
+  font-weight: 900;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 7px 0 var(--kawaii-red-dark), 0 12px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.circle-btn:hover {
+  transform: translateY(-3px) scale(1.06);
+  box-shadow: 0 10px 0 var(--kawaii-red-dark), 0 16px 24px rgba(217, 56, 41, 0.35);
+}
+
+.circle-btn:active {
+  transform: translateY(4px) scale(0.97);
+  box-shadow: 0 3px 0 var(--kawaii-red-dark), 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* =========================================
+   PANTALLA 5: CARTA ROMÁNTICA OSCURA
+   ========================================= */
+#screen-letter {
+  background: radial-gradient(circle at 50% 35%, #1d0718 0%, #090208 65%, #020003 100%);
+  overflow-y: auto;
+  padding: 4.5rem 1rem 3rem;
+  align-items: flex-start;
+}
+
+.letter-card {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 700px;
+  margin: auto;
+  background: rgba(16, 5, 15, 0.84);
+  border: 1.5px solid rgba(255, 30, 86, 0.45);
+  border-radius: 22px;
+  padding: clamp(1.8rem, 5vw, 3.2rem);
+  backdrop-filter: blur(12px);
+  box-shadow:
+    0 0 40px rgba(255, 30, 86, 0.22),
+    inset 0 0 25px rgba(157, 78, 221, 0.14);
+}
+
+.letter-title {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(2.8rem, 7vw, 4.3rem);
+  text-align: center;
+  color: #ff4d8d;
+  text-shadow: 0 0 18px rgba(255, 30, 86, 0.7);
+  margin-bottom: 1.5rem;
+  font-weight: 400;
+}
+
+.letter-body {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.22rem, 3vw, 1.48rem);
+  line-height: 1.75;
+  color: #ffeaf2;
+  white-space: pre-line;
+  text-align: left;
+  user-select: text;
+}
+
+.typing-cursor {
+  display: inline-block;
+  color: var(--neon-pink);
+  font-weight: bold;
+  font-size: 1.4rem;
+  animation: blinkCursor 0.8s infinite;
+}
+
+@keyframes blinkCursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.letter-footer {
+  margin-top: 2.2rem;
+  text-align: center;
+}
+
+.restart-btn {
+  background: transparent;
+  border: 1.5px solid var(--neon-pink);
+  color: #ffc2dc;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  letter-spacing: 3px;
+  padding: 10px 30px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.restart-btn:hover {
+  background: var(--neon-red);
+  border-color: var(--neon-red);
+  color: #fff;
+  box-shadow: 0 0 20px rgba(255, 30, 86, 0.65);
+}
+
+/* =========================================
+   ADAPTACIÓN MÓVIL
+   ========================================= */
+@media (max-width: 600px) {
+  .circle-btn {
+    width: 68px;
+    height: 68px;
+    font-size: 2rem;
+  }
+
+  .audio-btn {
+    top: 12px;
+    right: 12px;
+    padding: 7px 12px;
+    font-size: 0.78rem;
+  }
+}
